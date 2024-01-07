@@ -1,0 +1,61 @@
+﻿@page "/"
+@model Tonko_Zsanett_Proiect.Pages.Produse.IndexModel
+
+@{
+    ViewData["Title"] = "Produse";
+}
+
+<h1>Produse</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get" class="mb-4">
+    <div class="form-group">
+        <label for="searchString">Caută după Denumire produs/Furnizor:</label>
+        <div class="input-group">
+            <input type="text" id="searchString" name="SearchString" value="@Model.CurrentFilter" class="form-control" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Produs[0].Denumire)</th>
+            <th>@Html.DisplayNameFor(model => model.Produs[0].Pret)</th>
+            <th>@Html.DisplayNameFor(model => model.Produs[0].Furnizor.NumeFurnizor)</th>
+            <th>@Html.DisplayNameFor(model => model.Produs[0].ProdusCategories)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProdusD.Produse)
+        {
+            string selectedRow = (item.ID == Model.ProdusID) ? "table-success" : "";
+            <tr class="@selectedRow">
+                <td>@Html.DisplayFor(modelItem => item.Denumire)</td>
+                <td>@Html.DisplayFor(modelItem => item.Pret)</td>
+                <td>@Html.DisplayFor(modelItem => item.Furnizor.NumeFurnizor)</td>
+                <td>
+                    @{
+                   foreach (var category in item.ProdusCategories)
+                        {
+                            @category.Category.ID @: @category.Category.CategoryName 
+                            <br/>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-info">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
