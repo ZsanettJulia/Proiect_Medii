@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ using Tonko_Zsanett_Proiect.Models;
 
 namespace Tonko_Zsanett_Proiect.Pages.Categories
 {
+    [Authorize(Roles = "Admin")]
+
     public class DeleteModel : PageModel
     {
         private readonly Tonko_Zsanett_Proiect.Data.Tonko_Zsanett_ProiectContext _context;

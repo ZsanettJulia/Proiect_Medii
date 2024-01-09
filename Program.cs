@@ -4,15 +4,23 @@ using Microsoft.Extensions.DependencyInjection;
 using Tonko_Zsanett_Proiect.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+   policy.RequireRole("Admin"));
+});
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Produse");
+    options.Conventions.AllowAnonymousToPage("/Produse/Index");
+    options.Conventions.AllowAnonymousToPage("/Produse/Details");
+    options.Conventions.AuthorizeFolder("/Cumparate", "AdminPolicy");
 });
 builder.Services.AddDbContext<Tonko_Zsanett_ProiectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Tonko_Zsanett_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Tonko_Zsanett_ProiectContext' not found.")));
 builder.Services.AddDbContext<LibraryIdentityContext>(options =>
 
 options.UseSqlServer(builder.Configuration.GetConnectionString("Tonko_Zsanett_ProiectContext") ?? throw new InvalidOperationException("Connectionstring 'Tonko_Zsanett_ProiectContext' not found.")));
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<LibraryIdentityContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<LibraryIdentityContext>();
 
 
 var app = builder.Build();

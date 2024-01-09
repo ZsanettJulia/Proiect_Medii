@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,8 @@ using Tonko_Zsanett_Proiect.Models;
 
 namespace Tonko_Zsanett_Proiect.Pages.Produse
 {
+    [Authorize(Roles = "Admin")]
+
     public class CreateModel : ProdusCategoriesPageModel
     {
         private readonly Tonko_Zsanett_Proiect.Data.Tonko_Zsanett_ProiectContext _context;

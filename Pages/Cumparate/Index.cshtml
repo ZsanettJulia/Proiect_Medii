@@ -5,8 +5,6 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <p>
     <a asp-page="Create">Create New</a>
 </p>
@@ -26,10 +24,10 @@
 @foreach (var item in Model.Cumparat) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.User.ID)
+                @Html.DisplayFor(modelItem => item.User.Numecomplet)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Produs.ID)
+                @Html.DisplayFor(modelItem => item.Produs.Denumire)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
